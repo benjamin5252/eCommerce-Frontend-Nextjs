@@ -21,12 +21,12 @@ const { listProductsStart, listProductsSuccess, listProductsFail } = slice.actio
 export const listProducts = () => async (dispatch) => {
   return new Promise( async (resolve, reject) => {
     try{
-      dispatch(listProductsStart())
+      await dispatch(listProductsStart())
       const { data } = await axios.get('http://localhost:5000/api/products')
-      dispatch(listProductsSuccess(data))
+      await dispatch(listProductsSuccess(data))
       resolve(data)
     }catch(error){
-      dispatch(listProductsFail(error))
+      await dispatch(listProductsFail(error))
       reject(error)
     }
   });

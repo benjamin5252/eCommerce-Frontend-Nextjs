@@ -17,12 +17,13 @@ const ProductPage = ({ history }) => {
   const dispatch = useDispatch()
   const productDetails = useSelector(state => state.productDetails)
   const router = useRouter();
+  let routerIsReady = false;
 
   useEffect(()=>{
-    if(router.isReady){
+    if(!routerIsReady && router.isReady){
       dispatch(getProductDetails(router.query.id))
     }
-  },[router])
+  },[router.isReady])
 
   const addToCartHandler = () =>{
     router.push(`/cart/${router.query.id}?qty=${qty}`)

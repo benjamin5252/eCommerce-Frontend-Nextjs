@@ -21,12 +21,12 @@ const { getProductDetailsStart, getProductDetailsSuccess, getProductDetailsFail 
 export const getProductDetails = (id) => async (dispatch) => {
   return new Promise( async (resolve, reject) => {
     try{
-      dispatch(getProductDetailsStart())
+      await dispatch(getProductDetailsStart())
       const { data } = await axios.get(`http://localhost:5000/api/products/${id}`)
-      dispatch(getProductDetailsSuccess(data))
+      await dispatch(getProductDetailsSuccess(data))
       resolve(data)
     }catch(error){
-      dispatch(getProductDetailsFail(error))
+      await dispatch(getProductDetailsFail(error))
       reject(error)
     }
   });
