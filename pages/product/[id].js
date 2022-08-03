@@ -22,6 +22,7 @@ const ProductPage = ({ history }) => {
   useEffect(()=>{
     if(!routerIsReady && router.isReady){
       dispatch(getProductDetails(router.query.id))
+      console.log('router.isReady')
     }
   },[router.isReady])
 

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
+import { Row, Col, ListGroup, Image, Form, Button, Card, ListGroupItem } from 'react-bootstrap'
 import Message from '../../components/Message'
-import { addToCart, setCartItemsFromStorage } from '../../store/cart'
+import { addToCart, setCartItemsFromStorage, removeFromCart } from '../../store/cart'
 import { useRouter } from 'next/router'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as fas from "@fortawesome/free-solid-svg-icons";
@@ -45,6 +45,15 @@ const CartPage = () => {
     }
   },[router.isReady])
 
+  const removeFromCartHandler = (id)=>{
+    dispatch(removeFromCart(id))
+  }
+
+  const checkoutHandler = () =>{
+    // console.log('checkout')
+    // history.push('/login?redirect=shipping')
+  }
+
   return (
     <Row>
       <Col md={8}>
@@ -78,12 +87,20 @@ const CartPage = () => {
           ))}
         </ListGroup>) }
       </Col>
-      <Col md={2}>
-
+      <Col md={4}>
+            <Card >
+              <ListGroup variant="flush">
+                <ListGroup.Item  >
+                  <h2>Subtotal ({cartItems.reduce((acc, item) => { console.log(item.name,item.qty); return parseInt(acc, 10) +  parseInt(item.qty, 10)}, 0)}) items</h2>
+                  ${cartItems.reduce((acc, item)=> acc + item.qty * item.price, 0).toFixed(2)}
+                </ListGroup.Item>
+                <ListGroupItem>
+                  <Button style={{width: '100%'}} type="button" className='btn-block' disabled={cartItems.length === 0} onClick={checkoutHandler}>Proceed To Checkout</Button>
+                </ListGroupItem>
+              </ListGroup>
+            </Card>
       </Col>
-      <Col md={2}>
-
-      </Col>
+   
     </Row>
   )
 }
